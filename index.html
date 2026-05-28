@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Centros públicos de Educación Infantil que imparten Primer Ciclo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!--
+    Servidor local:
+      cd mapa
+      python3 -m http.server 8000
+    http://localhost:8000
+  -->
+
+  <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/pmtiles@3.0.6/dist/pmtiles.js"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <header id="header">
+    <span class="header-title">Centros públicos de Educación Infantil que imparten Primer Ciclo</span>
+  </header>
+
+  <button id="reset-btn"        class="ctrl-btn">&#8635;</button>
+  <button id="guarderias-btn"   class="ctrl-btn">Click para ver todos los centros</button>
+
+  <div id="vista-toggle" class="vista-toggle">
+    <button id="btn-secciones" class="vista-btn active">Secciones</button>
+    <button id="btn-radio"     class="vista-btn">Radio</button>
+  </div>
+
+  <div id="color-toggle" class="vista-toggle color-toggle">
+    <button id="btn-acceso"    class="vista-btn active">Acceso</button>
+    <button id="btn-percapita" class="vista-btn">Per cápita</button>
+    <button id="btn-equidad"   class="vista-btn">Equidad</button>
+  </div>
+
+  <div id="equidad-info" class="equidad-info hidden">
+    <span class="equidad-titulo">Índice de equidad</span>
+    <p>Combina la distancia al centro más cercano (60&nbsp;%) y la renta media del hogar (40&nbsp;%) en un índice de 0 a 1, donde 1 indica mejor acceso y mayor renta.</p>
+    <div class="equidad-formula">
+      <span>indice&nbsp;=&nbsp;0,6&nbsp;×&nbsp;acceso&nbsp;+&nbsp;0,4&nbsp;×&nbsp;renta</span>
+    </div>
+    <p class="equidad-nota">El componente de acceso vale 1 cuando la distancia es 0&nbsp;m y 0 cuando supera los 8&nbsp;km. El de renta, 1 a partir de 70.000&nbsp;€ y 0 por debajo de 20.000&nbsp;€.</p>
+    <div class="equidad-ejemplo">
+      <span class="equidad-ejemplo-titulo">Ejemplo</span>
+      <span>Distancia 1.450&nbsp;m · Renta 52.500&nbsp;€</span>
+      <span>acceso = (8.000−1.450)/8.000 = <b>0,82</b></span>
+      <span>renta = (52.500−20.000)/50.000 = <b>0,65</b></span>
+      <span>indice = 0,6×0,82 + 0,4×0,65 = <b>0,75</b></span>
+    </div>
+  </div>
+
+  <div id="radio-panel" class="radio-panel hidden">
+    <span class="radio-label">Radio de cobertura</span>
+    <div class="radio-opciones">
+      <button class="radio-btn" data-r="300">300 m</button>
+      <button class="radio-btn active" data-r="500">500 m</button>
+      <button class="radio-btn" data-r="1000">1 km</button>
+    </div>
+  </div>
+
+<div id="leyenda-panel" class="leyenda-panel"></div>
+  <div id="tooltip" class="map-tooltip"></div>
+  <div id="info-panel" class="info-panel ip-hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
