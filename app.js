@@ -10,8 +10,8 @@ const ESPANA_FILE     = 'espana.geojson';
 const map = new maplibregl.Map({
   container: 'map',
   style: { version: 8, sources: {}, layers: [] },
-  center: [-3.7, 40.2],
-  zoom: 5.5,
+  center: [-5.5, 37.5],
+  zoom: 4.6,
   minZoom: 3,
   maxBounds: [[-35, 20], [20, 56]],
   antialias: true,
@@ -107,13 +107,13 @@ const LEY = {
 
   percapita: `
     <div class="lp-titulo">Per cápita</div>
-    <div class="lp-grupo-label">Con centros · niños por centro</div>
+    <div class="lp-grupo-label">Con centros · bebés por centro</div>
     <div class="lp-steps">
       <div class="lp-step"><span class="lp-sq" style="background:#01f3b3"></span>Menos de 25</div>
       <div class="lp-step"><span class="lp-sq" style="background:#7fd9c0"></span>25 – 60</div>
       <div class="lp-step"><span class="lp-sq" style="background:#fee08b"></span>60 – 120</div>
       <div class="lp-step"><span class="lp-sq" style="background:#f4774a"></span>120 – 250</div>
-      <div class="lp-step"><span class="lp-sq" style="background:#d73027"></span>Más de 250 (saturada)</div>
+      <div class="lp-step"><span class="lp-sq" style="background:#d73027"></span>Más de 250</div>
     </div>
     <div class="lp-sep"></div>
     <div class="lp-steps">
@@ -310,7 +310,6 @@ map.on('load', async () => { try {
             ${dirLine ? `<span class="ip-addr-line ip-addr-line--street">${dirLine}</span>` : ''}
             ${locLine ? `<span class="ip-addr-line">${locLine}</span>` : ''}
           </div>` : ''}
-        <p class="ip-hint">Clic para más detalles</p>
       </div>`;
   }
 
@@ -449,7 +448,7 @@ map.on('load', async () => { try {
 
   /* ── Reset ── */
   document.getElementById('reset-btn').addEventListener('click', () =>
-    map.flyTo({ center: [-3.7, 40.2], zoom: 5.5, duration: 1200 })
+    map.flyTo({ center: [-5.5, 37.5], zoom: 4.6, duration: 1200 })
   );
 
   /* ── Toggle puntos de guarderías ── */
