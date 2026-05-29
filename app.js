@@ -36,6 +36,8 @@ function radioPx(metros) {
 /* Vista Acceso: distancia al centro más cercano */
 const distanciaFillColor = [
   'case',
+  ['==', ['get', 'PROVINCIA'], 'Murcia'],
+  '#d8d8d8',
   ['==', ['get', 'dist_m'], null],
   '#d8d8d8',
   ['interpolate', ['linear'], ['get', 'dist_m'],
@@ -50,15 +52,12 @@ const distanciaFillColor = [
 /* Vista Per cápita: ratio niños/guardería */
 const ratioFillColor = [
   'case',
-  ['all', ['==', ['get', 'N_GUARDERIAS'], 0], ['==', ['get', 'PERSONAS'], 0]],
-  'rgba(0,0,0,0)',
+  ['==', ['get', 'PROVINCIA'], 'Murcia'],
+  '#d8d8d8',
+  ['==', ['get', 'PERSONAS'], 0],
+  '#aaaaaa',
   ['==', ['get', 'N_GUARDERIAS'], 0],
-  ['interpolate', ['linear'], ['get', 'PERSONAS'],
-    1,   '#fddbc7',
-    30,  '#f4a582',
-    80,  '#d6604d',
-    200, '#b2182b',
-  ],
+  '#494949',
   ['interpolate', ['linear'], ['get', 'RATIO'],
     0,   '#01f3b3',
     25,  '#7fd9c0',
@@ -78,6 +77,8 @@ const scoreEquidad = ['+', ['*', 0.6, scoreAcceso], ['*', 0.4, scoreRenta]];
 
 const equidadFillColor = [
   'case',
+  ['==', ['get', 'PROVINCIA'], 'Murcia'],
+  '#d8d8d8',
   ['any', ['==', ['get', 'RENTA_HOGAR'], null], ['==', ['get', 'dist_m'], null]],
   '#d0d0d0',
   ['interpolate', ['linear'], scoreEquidad,
@@ -102,11 +103,11 @@ const LEY = {
       <div class="lp-step"><span class="lp-sq" style="background:#d73027"></span>Más de 8 km</div>
     </div>
     <div class="lp-sep"></div>
-    <div class="lp-step"><span class="lp-dot"></span>Guardería</div>`,
+    <div class="lp-step"><span class="lp-dot"></span>Centro público de Primer Ciclo de Infantil</div>`,
 
   percapita: `
     <div class="lp-titulo">Per cápita</div>
-    <div class="lp-grupo-label">Con guarderías · niños por guardería</div>
+    <div class="lp-grupo-label">Con centros · niños por centro</div>
     <div class="lp-steps">
       <div class="lp-step"><span class="lp-sq" style="background:#01f3b3"></span>Menos de 25</div>
       <div class="lp-step"><span class="lp-sq" style="background:#7fd9c0"></span>25 – 60</div>
@@ -115,13 +116,12 @@ const LEY = {
       <div class="lp-step"><span class="lp-sq" style="background:#d73027"></span>Más de 250 (saturada)</div>
     </div>
     <div class="lp-sep"></div>
-    <div class="lp-grupo-label">Sin guarderías · niños 0-3 en la sección</div>
     <div class="lp-steps">
-      <div class="lp-step"><span class="lp-sq" style="background:#fddbc7"></span>Pocos</div>
-      <div class="lp-step"><span class="lp-sq" style="background:#b2182b"></span>Muchos</div>
+      <div class="lp-step"><span class="lp-sq" style="background:#494949"></span>Sin centro en la sección</div>
+      <div class="lp-step"><span class="lp-sq" style="background:#aaaaaa"></span>Sin bebés 0-3</div>
     </div>
     <div class="lp-sep"></div>
-    <div class="lp-step"><span class="lp-dot"></span>Guardería</div>`,
+    <div class="lp-step"><span class="lp-dot"></span>Centro público de Primer Ciclo de Infantil</div>`,
 
   equidad: `
     <div class="lp-titulo">Equidad</div>
@@ -134,13 +134,13 @@ const LEY = {
       <div class="lp-step"><span class="lp-sq" style="background:#01f3b3"></span>Cerca + renta alta</div>
     </div>
     <div class="lp-sep"></div>
-    <div class="lp-step"><span class="lp-dot"></span>Guardería</div>`,
+    <div class="lp-step"><span class="lp-dot"></span>Centro público de Primer Ciclo de Infantil</div>`,
 
   radio: `
     <div class="lp-titulo">Radio de cobertura</div>
     <div class="lp-steps">
       <div class="lp-step"><span class="lp-ring"></span>Área a la distancia elegida</div>
-      <div class="lp-step"><span class="lp-dot"></span>Guardería</div>
+      <div class="lp-step"><span class="lp-dot"></span>Centro público de Primer Ciclo de Infantil</div>
     </div>`,
 };
 
@@ -255,7 +255,6 @@ map.on('load', async () => { try {
       <div class="ip-bar"></div>
       <div class="ip-body">
         <div class="ip-header">
-          <span class="ip-badge">${p.CCAA || ''}</span>
           <span class="ip-seccion">Secc. ${p.SECCION}</span>
         </div>
         <div class="ip-name">${p.MUNICIPIO || '—'}</div>
@@ -268,11 +267,11 @@ map.on('load', async () => { try {
           </div>
           <div class="ip-stat">
             <span class="ip-stat-val">${n}</span>
-            <span class="ip-stat-key">Guarderías</span>
+            <span class="ip-stat-key">Centros</span>
           </div>
           <div class="ip-stat">
             <span class="ip-stat-val">${ratio}</span>
-            <span class="ip-stat-key">Niños/guardería</span>
+            <span class="ip-stat-key">Niños/centro</span>
           </div>
           <div class="ip-stat">
             <span class="ip-stat-val">${dist}</span>
@@ -301,8 +300,7 @@ map.on('load', async () => { try {
       <div class="ip-bar"></div>
       <div class="ip-body">
         <div class="ip-header">
-          <span class="ip-badge">${ccaa}</span>
-          <span class="ip-tag">Guardería</span>
+          <span class="ip-tag">Centro público de Primer Ciclo de Infantil</span>
         </div>
         <div class="ip-name">${nombre}</div>
         ${dirLine || locLine ? `
@@ -363,7 +361,6 @@ map.on('load', async () => { try {
       <div>
         <div class="pp-bar"></div>
         <div class="pp-inner">
-          ${ccaa ? `<span class="pp-badge">${ccaa}</span>` : ''}
           <p class="pp-nombre">${nombre}</p>
           ${dirLine || locLine ? `
             <div class="pp-sep"></div>
@@ -371,7 +368,6 @@ map.on('load', async () => { try {
               ${dirLine ? `<span class="pp-addr-line pp-addr-line--street">${dirLine}</span>` : ''}
               ${locLine ? `<span class="pp-addr-line">${locLine}</span>` : ''}
             </div>` : ''}
-          <a class="pp-link" href="${mapsUrl}" target="_blank" rel="noopener">Cómo llegar &rarr;</a>
         </div>
       </div>`;
 

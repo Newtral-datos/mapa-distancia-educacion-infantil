@@ -197,6 +197,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
 .color-toggle {
   top: 210px;
 }
+.color-toggle.hidden { display: none; }
 
 .vista-btn {
   padding: 8px 14px;
