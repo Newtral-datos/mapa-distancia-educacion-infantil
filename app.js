@@ -246,9 +246,10 @@ map.on('load', async () => { try {
 
   /* ── Render panel sección censal ── */
   function renderPanelSeccion(p) {
+    const fmt   = n => Math.round(n).toLocaleString('es-ES');
     const n     = p.N_GUARDERIAS ?? 0;
     const ratio = n > 0 ? parseFloat(p.RATIO).toFixed(0) : '—';
-    const dist  = p.dist_m  != null ? `${Math.round(p.dist_m)} m` : '—';
+    const dist  = p.dist_m     != null ? `${fmt(p.dist_m)} m` : '—';
     const renta = p.RENTA_HOGAR != null ? `€${Math.round(p.RENTA_HOGAR / 1000)}k` : null;
 
     infoPanel.innerHTML = `
@@ -262,7 +263,7 @@ map.on('load', async () => { try {
         <div class="ip-sep"></div>
         <div class="ip-stats">
           <div class="ip-stat">
-            <span class="ip-stat-val">${p.PERSONAS ?? '—'}</span>
+            <span class="ip-stat-val">${p.PERSONAS != null ? fmt(p.PERSONAS) : '—'}</span>
             <span class="ip-stat-key">Niños 0-3</span>
           </div>
           <div class="ip-stat">
@@ -424,6 +425,14 @@ map.on('load', async () => { try {
   document.getElementById('btn-acceso').addEventListener('click',    () => setColor('acceso'));
   document.getElementById('btn-percapita').addEventListener('click', () => setColor('percapita'));
   document.getElementById('btn-equidad').addEventListener('click',   () => setColor('equidad'));
+
+  /* ── Toggle plegar panel equidad (móvil) ── */
+  const equidadToggleBtn = document.getElementById('equidad-toggle');
+  if (window.innerWidth <= 600) equidadInfoEl.classList.add('collapsed');
+  equidadToggleBtn.addEventListener('click', () => {
+    equidadInfoEl.classList.toggle('collapsed');
+    equidadToggleBtn.textContent = equidadInfoEl.classList.contains('collapsed') ? '▸' : '▾';
+  });
 
   setModo(modo);
   setColor(colorMode);

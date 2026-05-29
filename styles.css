@@ -238,6 +238,24 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
 }
 .equidad-info.hidden { display: none; }
 
+.equidad-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.equidad-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--muted);
+  padding: 0 2px;
+  line-height: 1;
+}
+.equidad-body { display: flex; flex-direction: column; gap: 6px; }
+.equidad-info.collapsed .equidad-body { display: none; }
+
 .equidad-titulo {
   font-size: 11px;
   font-weight: 700;
@@ -686,9 +704,70 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
 
 /* ── Responsive ── */
 @media (max-width: 600px) {
-  #header { padding: 10px 14px; gap: 8px; }
+  /* Header */
+  #header { padding: 8px 12px; gap: 8px; }
+  .header-title {
+    font-size: 10px;
+    white-space: normal;
+    line-height: 1.3;
+  }
   .header-count { display: none; }
-  .ctrl-btn { padding: 7px 13px; font-size: 12px; }
+
+  /* Botones izquierda */
+  .ctrl-btn { padding: 7px 12px; font-size: 12px; }
+  #reset-btn      { top: 76px; }
+  #guarderias-btn { top: 118px; }
+
+  /* Toggles */
+  .vista-toggle { top: 162px; }
+  .color-toggle { top: 208px; }
+
+  /* Equidad info: compacto, plegable */
+  .equidad-info {
+    top: 254px;
+    width: calc(100vw - 32px);
+    max-width: 270px;
+  }
+  .equidad-toggle { display: block; }
+  .equidad-ejemplo { display: none; }
+
+  /* Info panel: abajo a la derecha */
+  .info-panel {
+    bottom: 8px;
+    top: auto;
+    right: 8px;
+    width: 210px;
+  }
+  .ip-body { padding: 10px 12px 12px; }
+  .ip-stats { gap: 8px 12px; }
+  .ip-stat-val { font-size: 15px; }
+  .ip-stat-key { font-size: 9px; }
+  .ip-name { font-size: 12px; }
+
+  /* Radio panel */
+  .radio-panel { top: 254px; }
+
+  /* Geocoder alineado con reset-btn */
+  .maplibregl-ctrl-top-right { top: 76px !important; }
+  .maplibregl-ctrl-top-right .maplibregl-ctrl { margin-top: 0 !important; }
+  .geocoder-ctrl { width: 160px; }
+
+  /* Leyenda: estrecha */
+  .leyenda-panel {
+    left: 8px;
+    min-width: 0;
+    width: 150px;
+    padding: 8px 10px;
+    bottom: 44px;
+  }
+  .lp-titulo { font-size: 10px; margin-bottom: 6px; }
+  .lp-step { font-size: 10px; gap: 6px; }
+  .lp-sq { width: 12px; height: 12px; }
+  .lp-dot { width: 8px; height: 8px; }
+  .lp-sep { margin: 5px 0; }
+  .lp-desc, .lp-grupo-label { font-size: 9px; }
+
+
+  /* Filtro */
   .filtro-panel { width: calc(100vw - 32px); }
-  .geocoder-ctrl { width: 180px; }
 }

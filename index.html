@@ -41,18 +41,23 @@
   </div>
 
   <div id="equidad-info" class="equidad-info hidden">
-    <span class="equidad-titulo">Índice de equidad</span>
-    <p>Combina la distancia al centro más cercano (60&nbsp;%) y la renta media del hogar (40&nbsp;%) en un índice de 0 a 1, donde 1 indica mejor acceso y mayor renta.</p>
-    <div class="equidad-formula">
-      <span>indice&nbsp;=&nbsp;0,6&nbsp;×&nbsp;acceso&nbsp;+&nbsp;0,4&nbsp;×&nbsp;renta</span>
+    <div class="equidad-header">
+      <span class="equidad-titulo">Índice de equidad</span>
+      <button id="equidad-toggle" class="equidad-toggle" aria-label="Plegar">▾</button>
     </div>
-    <p class="equidad-nota">El componente de acceso vale 1 cuando la distancia es 0&nbsp;m y 0 cuando supera los 8&nbsp;km. El de renta, 1 a partir de 70.000&nbsp;€ y 0 por debajo de 20.000&nbsp;€.</p>
-    <div class="equidad-ejemplo">
-      <span class="equidad-ejemplo-titulo">Ejemplo</span>
-      <span>Distancia 1.450&nbsp;m · Renta 52.500&nbsp;€</span>
-      <span>acceso = (8.000−1.450)/8.000 = <b>0,82</b></span>
-      <span>renta = (52.500−20.000)/50.000 = <b>0,65</b></span>
-      <span>indice = 0,6×0,82 + 0,4×0,65 = <b>0,75</b></span>
+    <div class="equidad-body">
+      <p>Combina la distancia al centro más cercano (60&nbsp;%) y la renta media del hogar (40&nbsp;%) en un índice de 0 a 1, donde 1 indica mejor acceso y mayor renta.</p>
+      <div class="equidad-formula">
+        <span>indice&nbsp;=&nbsp;0,6&nbsp;×&nbsp;acceso&nbsp;+&nbsp;0,4&nbsp;×&nbsp;renta</span>
+      </div>
+      <p class="equidad-nota">El componente de acceso vale 1 cuando la distancia es 0&nbsp;m y 0 cuando supera los 8&nbsp;km. El de renta, 1 a partir de 70.000&nbsp;€ y 0 por debajo de 20.000&nbsp;€.</p>
+      <div class="equidad-ejemplo">
+        <span class="equidad-ejemplo-titulo">Ejemplo</span>
+        <span>Distancia 1.450&nbsp;m · Renta 52.500&nbsp;€</span>
+        <span>acceso = (8.000−1.450)/8.000 = <b>0,82</b></span>
+        <span>renta = (52.500−20.000)/50.000 = <b>0,65</b></span>
+        <span>indice = 0,6×0,82 + 0,4×0,65 = <b>0,75</b></span>
+      </div>
     </div>
   </div>
 
